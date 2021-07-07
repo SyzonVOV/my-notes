@@ -1,16 +1,17 @@
 //A reducer is a pure function that receives the state of the store and an action as parameters and then returns the updated state.
+import { nanoid } from 'nanoid'
 import * as actionTypes from "./actionTypes"
 
 const initialState: NoteState = {
   notes: [
     {
-      id: 1,
+      id: nanoid(10),
       title: "note 1",
       body:
         "Quisque cursus, metus vitae pharetra Nam libero tempore, cum soluta nobis est eligendi",
     },
     {
-      id: 2,
+      id: nanoid(10),
       title: "note 2",
       body:
         "Harum quidem rerum facilis est et expedita distinctio quas molestias excepturi sint",
@@ -25,7 +26,7 @@ const reducer = (
   switch (action.type) {
     case actionTypes.ADD_NOTE:
       const newNote: INote = {
-        id: Math.random(),
+        id: nanoid(10),
         title: action.note.title,
         body: action.note.body,
       }

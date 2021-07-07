@@ -1,7 +1,7 @@
 // The type.d.ts file that holds the TypeScript types, which can be used now in other files without importing.
 
 interface INote {
-  id: number
+  id: string
   title: string
   body: string
 }
