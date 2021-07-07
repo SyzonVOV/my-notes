@@ -1,26 +1,37 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import { useCallback } from "react"
+import { useSelector, shallowEqual, useDispatch } from "react-redux"
+import { Dispatch } from "redux"
 
-function App() {
+import { Note } from "./components/Note"
+import { AddNote } from "./components/AddNote"
+import { addNote, removeNote } from "./store/actionCreators"
+
+const App: React.FC = () => {
+  const notes: readonly INote[] = useSelector(
+    (state: NoteState) => state.notes,
+    shallowEqual
+  )
+
+  const dispatch: Dispatch<any> = useDispatch()
+
+  const saveNote = useCallback(
+    (note: INote) => dispatch(addNote(note)),
+    [dispatch]
+  )
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <main>
+      <h1>My Notes</h1>
+      <AddNote saveNote={saveNote} />
+      {notes.map((note: INote) => (
+        <Note
+          key={note.id}
+          note={note}
+          removeNote={removeNote}
+        />
+      ))}
+    </main>
+  )
 }
 
-export default App;
+export default App
